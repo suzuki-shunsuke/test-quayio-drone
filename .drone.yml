@@ -17,7 +17,6 @@ pipeline:
   push/docker:
     image: plugins/docker:17.12
     settings:
-      tags: latest
       repo: quay.io/repository/suzuki_shunsuke/test-quayio-drone
       username:
         from_secret: quayio_username
