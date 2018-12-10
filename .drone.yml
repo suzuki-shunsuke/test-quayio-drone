@@ -14,7 +14,7 @@ steps:
         from_secret: quayio_password
     when:
       event:
-        - pull_request
+        - push
   - name: push/docker
     image: plugins/docker:17.12
     settings:
