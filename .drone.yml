@@ -5,6 +5,7 @@ steps:
   - name: hello
     image: plugins/git
     commands:
+      - git fetch --tags
       - git tag
     when:
       event:
