@@ -3,10 +3,11 @@ kind: pipeline
 name: build
 steps:
   - name: hello
-    image: plugins/git
+    image: suzukishunsuke/go-ci:1.0.0
     commands:
       - git fetch --tags
       - git tag
     when:
       event:
         - tag
+        - push
