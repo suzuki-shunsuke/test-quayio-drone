@@ -2,7 +2,7 @@
 kind: pipeline
 name: build
 steps:
-  - name: push/docker
+  - name: pr/docker
     image: plugins/docker:17.12
     settings:
       repo: quay.io/suzuki_shunsuke/test-quayio-drone
@@ -15,4 +15,16 @@ steps:
     when:
       event:
         - pull_request
+  - name: push/docker
+    image: plugins/docker:17.12
+    settings:
+      repo: quay.io/suzuki_shunsuke/test-quayio-drone
+      registry: quay.io
+      dry_run: true
+      username:
+        from_secret: quayio_username
+      password:
+        from_secret: quayio_password
+    when:
+      event:
         - push
