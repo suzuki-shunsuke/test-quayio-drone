@@ -1,33 +1,42 @@
 ---
-pipeline:
-  tag/docker:
+kind: pipeline
+name: build
+steps:
+  - name: tag/docker
     image: plugins/docker:17.12
     settings:
       tags:
         - latest
         - "${DRONE_TAG##v}"
-      repo: quay.io/repository/suzuki_shunsuke/test-quayio-drone
+      repo: quay.io/suzuki_shunsuke/test-quayio-drone
+      registry: quay.io
       username:
         from_secret: quayio_username
       password:
         from_secret: quayio_password
     when:
-      event: tag
-      ref: refs/tags/*
-  push/docker:
+      event:
+        - tag
+      ref:
+        - refs/tags/*
+  - name: push/docker
     image: plugins/docker:17.12
     settings:
-      repo: quay.io/repository/suzuki_shunsuke/test-quayio-drone
+      repo: quay.io/suzuki_shunsuke/test-quayio-drone
+      registry: quay.io
       username:
         from_secret: quayio_username
       password:
         from_secret: quayio_password
     when:
-      event: push
-  pr/docker:
-    image: plugins/docker:17.12
+      event:
+        - push
+  - name: pr/docker
+    image: plugins/docker
     settings:
-      repo: quay.io/repository/suzuki_shunsuke/test-quayio-drone
+      repo: suzuki_shunsuke/test-quayio-drone
+      registry: quay.io
       dry_run: true
     when:
-      event: pull_request
+      event:
+        - pull_request
